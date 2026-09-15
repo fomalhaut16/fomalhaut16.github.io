@@ -2,32 +2,59 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="日々のことや、好きなものを少しずつ集める個人のホームページです。">
-    <title>わたしのホームページ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="個人のホームページです。">
+    <title>ホームページ</title>
     <link rel="stylesheet" href="styles.css">
   </head>
-  <body>
-    <main class="page">
-      <header class="intro">
-        <p class="eyebrow">MY LITTLE CORNER OF THE INTERNET</p>
-        <h1>こんにちは。<br>わたしのホームページへようこそ。</h1>
-        <p class="lead">日々のこと、気になったこと、好きなもの。<br>ここに少しずつ置いていこうと思います。</p>
-      </header>
-
-      <section class="note" aria-labelledby="about-title">
-        <span class="label">01 / ABOUT</span>
-        <h2 id="about-title">この場所について</h2>
-        <p>インターネットの片隅につくった、小さな個人サイトです。<br>まだ何もありませんが、のんびり育てていく予定です。</p>
+  <body id="top">
+    <a class="skip-link" href="#main">本文へ</a>
+    <header class="site-header">
+      <nav aria-label="メインナビゲーション">
+        <a href="index.html" aria-current="page">Top</a>
+        <a href="001.html">001</a>
+        <a href="002.html">002</a>
+        <a href="003.html">003</a>
+      </nav>
+    </header>
+    <main id="main">
+      <!-- メイン画像を追加する場合は、この領域に配置する。 -->
+      <section class="main-visual" aria-labelledby="site-title">
+        <div class="visual-frame" aria-hidden="true"></div>
+        <div class="site-title">
+          <p class="site-subtitle">Personal website</p>
+          <h1 id="site-title">ホームページ</h1>
+          <p class="site-caption">個人のホームページです。</p>
+        </div>
+        <a class="scroll-link" href="#contents">Scroll<span aria-hidden="true"></span></a>
       </section>
-
-      <section class="note" aria-labelledby="now-title">
-        <span class="label">02 / NOW</span>
-        <h2 id="now-title">ただいま準備中</h2>
-        <p>まずはホームページをつくるところから。<br>お茶でも飲みながら、気ままに更新していきます。</p>
+      <section class="contents" id="contents" aria-labelledby="contents-title">
+        <header class="section-heading">
+          <h2 id="contents-title">Contents</h2>
+          <p>コンテンツ</p>
+        </header>
+        <div class="page-links">
+          <a class="page-link" href="001.html">
+            <span class="page-number">001</span>
+            <span class="page-status">準備中</span>
+            <span class="link-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="page-link" href="002.html">
+            <span class="page-number">002</span>
+            <span class="page-status">準備中</span>
+            <span class="link-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="page-link" href="003.html">
+            <span class="page-number">003</span>
+            <span class="page-status">準備中</span>
+            <span class="link-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
       </section>
-
-      <footer>見に来てくれて、ありがとうございます。</footer>
     </main>
+    <footer class="site-footer">
+      <a href="#top">Page top <span aria-hidden="true">↑</span></a>
+      <small>Personal website</small>
+    </footer>
   </body>
 </html>
