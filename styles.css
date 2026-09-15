@@ -86,19 +86,6 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
   border: 1px solid var(--deep);
   pointer-events: none;
 }
-.visual-frame::before,
-.visual-frame::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  width: 5px;
-  height: 5px;
-  border: 1px solid var(--accent);
-  background: var(--base);
-  transform: translateX(-50%) rotate(45deg);
-}
-.visual-frame::before { top: -3px; }
-.visual-frame::after { bottom: -3px; }
 .site-title { position: relative; text-align: center; }
 .site-subtitle { margin: 0 0 26px; color: var(--deep); font-size: 14px; letter-spacing: 0.2em; }
 h1 {
