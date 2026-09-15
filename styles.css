@@ -108,7 +108,14 @@ h1 {
   font-size: 12px;
   letter-spacing: 0.14em;
 }
-.scroll-link span { height: 36px; width: 1px; background: var(--accent); }
+.scroll-link span {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  background: var(--accent);
+  border: 1px solid var(--deep);
+  transform: rotate(45deg);
+}
 
 .contents { padding: 104px 28px 120px; background: var(--mist); }
 .section-heading { text-align: center; }
