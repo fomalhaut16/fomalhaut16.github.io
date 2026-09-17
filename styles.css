@@ -55,30 +55,29 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
   font-size: 15px;
   letter-spacing: 0.12em;
 }
-.nav-frame {
+.site-header a::after {
+  content: "";
   position: absolute;
-  inset: 12px -8px;
-  width: calc(100% + 16px);
-  height: calc(100% - 24px);
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 1;
+  bottom: 10px;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  opacity: 0;
+  transform: translate(-50%, 4px) rotate(45deg);
+  transition: opacity 240ms ease, transform 280ms ease;
   pointer-events: none;
 }
-.nav-frame path {
-  vector-effect: non-scaling-stroke;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  transition: stroke-dashoffset 560ms ease-in-out;
-}
-.site-header a[aria-current="page"] .nav-frame path {
-  stroke-dashoffset: 0.902;
-}
-.site-header a:focus-visible .nav-frame path {
-  stroke-dashoffset: 0;
+.site-header a[aria-current="page"]::after,
+.site-header a:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0) rotate(45deg);
 }
 @media (hover: hover) {
-  .site-header a:hover .nav-frame path { stroke-dashoffset: 0; }
+  .site-header a:hover::after {
+    opacity: 1;
+    transform: translate(-50%, 0) rotate(45deg);
+  }
 }
 
 .main-visual {
@@ -252,6 +251,6 @@ h1 {
 
 @media (prefers-reduced-motion: reduce) {
   :root { scroll-behavior: auto; }
-  .nav-frame path { transition: none; }
+  .site-header a::after { transition: none; }
   *, *::before, *::after { transition: none; }
 }
