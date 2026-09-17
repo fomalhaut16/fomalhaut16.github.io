@@ -43,7 +43,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .site-header nav {
   display: flex;
   justify-content: center;
-  gap: clamp(12px, 5vw, 72px);
+  gap: clamp(20px, 5vw, 72px);
   padding: 0 20px;
 }
 .site-header a {
@@ -55,20 +55,30 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
   font-size: 15px;
   letter-spacing: 0.12em;
 }
-.site-header a::after {
-  content: "";
+.nav-frame {
   position: absolute;
-  bottom: 12px;
-  left: 50%;
-  width: 20px;
-  height: 1px;
-  background: var(--accent);
-  transform: translateX(-50%) scaleX(0);
-  transition: transform 180ms ease;
+  inset: 12px -8px;
+  width: calc(100% + 16px);
+  height: calc(100% - 24px);
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1;
+  pointer-events: none;
 }
-.site-header a:hover::after,
-.site-header a[aria-current="page"]::after {
-  transform: translateX(-50%) scaleX(1);
+.nav-frame path {
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 560ms ease-in-out;
+}
+.site-header a[aria-current="page"] .nav-frame path {
+  stroke-dashoffset: 0.902;
+}
+.site-header a:focus-visible .nav-frame path {
+  stroke-dashoffset: 0;
+}
+@media (hover: hover) {
+  .site-header a:hover .nav-frame path { stroke-dashoffset: 0; }
 }
 
 .main-visual {
@@ -242,5 +252,6 @@ h1 {
 
 @media (prefers-reduced-motion: reduce) {
   :root { scroll-behavior: auto; }
+  .nav-frame path { transition: none; }
   *, *::before, *::after { transition: none; }
 }
