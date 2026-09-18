@@ -7,8 +7,8 @@
   --accent: #c9a66b;
   --mist: #ddd9e8;
   --line: rgba(63, 54, 99, 0.32);
-  /* 紙の質感：0 で非表示。濃さを変える場合は 0.08〜0.24 程度。 */
-  --paper-texture-opacity: 0.18;
+  /* 紙の質感：0 で非表示、1 が最大。今回は比較用に最大まで強調。 */
+  --paper-texture-opacity: 1;
   font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
   color: var(--main);
   background: var(--base);
