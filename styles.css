@@ -7,8 +7,8 @@
   --accent: #c9a66b;
   --mist: #ddd9e8;
   --line: rgba(63, 54, 99, 0.32);
-  /* 紙の質感：0 で非表示。濃さを変える場合は 0.04〜0.12 程度。 */
-  --paper-texture-opacity: 0.085;
+  /* 紙の質感：0 で非表示。濃さを変える場合は 0.08〜0.24 程度。 */
+  --paper-texture-opacity: 0.18;
   font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
   color: var(--main);
   background: var(--base);
@@ -227,8 +227,9 @@ h1 {
   align-items: center;
   justify-content: center;
   gap: 14px;
-  min-height: 44px;
-  min-width: 72px;
+  width: 100%;
+  max-width: 144px;
+  min-height: 56px;
   margin-top: 8px;
   font-size: 12px;
   color: var(--deep);
