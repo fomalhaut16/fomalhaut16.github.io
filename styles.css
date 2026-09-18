@@ -7,6 +7,8 @@
   --accent: #c9a66b;
   --mist: #ddd9e8;
   --line: rgba(63, 54, 99, 0.32);
+  /* 紙の質感：0 で非表示。濃さを変える場合は 0.04〜0.12 程度。 */
+  --paper-texture-opacity: 0.085;
   font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
   color: var(--main);
   background: var(--base);
@@ -18,6 +20,17 @@
 
 * { box-sizing: border-box; }
 body { margin: 0; }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  background: url("paper-grain.svg") repeat;
+  opacity: var(--paper-texture-opacity);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+[hidden] { display: none !important; }
 a { color: inherit; text-decoration: none; }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 
@@ -34,6 +47,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .skip-link:focus { transform: translateY(0); }
 
 .site-header {
+  view-transition-name: site-header;
   position: sticky;
   top: 0;
   z-index: 5;
@@ -178,8 +192,52 @@ h1 {
   box-shadow: 0 0 0 7px var(--mist), 0 0 0 8px var(--line);
   transform: translate(-50%, -50%) rotate(45deg);
 }
+.page-links[data-enhanced]::after { display: none; }
+.orbit-meteor {
+  position: absolute;
+  inset: -1px;
+  z-index: 1;
+  border-radius: 50%;
+  background: conic-gradient(transparent 0deg 308deg, #c9a66b00 308deg, var(--accent) 350deg, var(--light) 359deg, transparent 360deg);
+  mask-image: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+  opacity: 0;
+  pointer-events: none;
+}
+.orbit-preview {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  width: 48%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.preview-mark {
+  display: block;
+  width: 5px;
+  height: 5px;
+  margin: 0 auto 16px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+.preview-title { margin: 0; font-size: 28px; letter-spacing: 0.1em; overflow-wrap: anywhere; }
+.preview-description { margin: 10px 0 0; font-size: 12px; line-height: 1.9; color: var(--deep); }
+.preview-open {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 44px;
+  min-width: 72px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--deep);
+}
+.preview-open span { transition: transform 180ms ease; }
+.preview-open:hover span { transform: translateX(3px); }
 .page-link {
   position: absolute;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -197,10 +255,30 @@ h1 {
 .page-link:nth-child(1) { top: 0; left: 50%; }
 .page-link:nth-child(2) { top: 75%; left: 6.7%; }
 .page-link:nth-child(3) { top: 75%; left: 93.3%; }
-.page-link:hover { color: var(--deep); background: var(--accent); transform: translate(-50%, -50%) scale(1.06); }
+.page-link[data-selected],
+.page-link:focus-visible { color: var(--deep); background: var(--accent); }
+@media (hover: hover) {
+  .page-link:hover { color: var(--deep); background: var(--accent); transform: translate(-50%, -50%) scale(1.06); }
+}
 .page-number { font-size: var(--number-size); line-height: 1.2; letter-spacing: 0.12em; text-indent: 0.12em; }
 .page-status { margin-top: 8px; color: inherit; font-size: var(--status-size); letter-spacing: 0.16em; text-indent: 0.16em; opacity: 0.82; }
 .page-links[data-compact="true"] .page-status { display: none; }
+
+/* 玉の間隔が狭くなる件数では、読める大きさを保って整列する。 */
+.page-links[data-layout="grid"] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
+  width: min(100%, 720px);
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 0;
+}
+.page-links[data-layout="grid"]::before,
+.page-links[data-layout="grid"] .orbit-meteor { display: none; }
+.page-links[data-layout="grid"] .page-link { position: relative; top: auto !important; left: auto !important; transform: none; }
+.page-links[data-layout="grid"] .orbit-preview { position: static; width: 100%; margin-top: 16px; transform: none; }
 
 .site-footer {
   display: flex;
@@ -244,13 +322,35 @@ h1 {
     margin: 84px auto 58px;
   }
   .page-links::before { inset: 10px; }
+  .orbit-preview { width: 44%; }
+  .preview-mark { display: none; }
+  .preview-title { font-size: 19px; }
+  .preview-description { margin-top: 4px; font-size: 10px; }
+  .preview-open { margin-top: 0; font-size: 11px; gap: 8px; }
   .page-link { box-shadow: 0 0 0 6px var(--mist), 0 0 0 7px rgba(63, 54, 99, 0.2); }
   .page-status { margin-top: 5px; }
   .subpage { min-height: calc(100svh - 59px); padding: 64px 24px; }
 }
 
+/* 対応ブラウザでは通常のページリンク・戻る操作にも適用される。 */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: page-leave 200ms ease-in both; }
+::view-transition-new(root) { animation: page-enter 320ms 40ms ease-out both; }
+::view-transition-group(site-header),
+::view-transition-new(site-header) { animation: none; }
+::view-transition-old(site-header) { display: none; }
+@keyframes page-leave {
+  to { opacity: 0; transform: translateY(-8px); }
+}
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
   :root { scroll-behavior: auto; }
-  .site-header a::after { transition: none; }
+  .site-header a::after, .page-link, .preview-open span { transition: none; }
+  .orbit-meteor { display: none; }
   *, *::before, *::after { transition: none; }
 }
