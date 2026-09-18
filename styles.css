@@ -7,8 +7,8 @@
   --accent: #c9a66b;
   --mist: #ddd9e8;
   --line: rgba(63, 54, 99, 0.32);
-  /* 紙の質感：0 で非表示、1 が最大。今回は比較用に最大まで強調。 */
-  --paper-texture-opacity: 1;
+  /* Set to 0 to disable the paper texture. */
+  --paper-texture-opacity: 0;
   font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
   color: var(--main);
   background: var(--base);
@@ -265,7 +265,7 @@ h1 {
 .page-status { margin-top: 8px; color: inherit; font-size: var(--status-size); letter-spacing: 0.16em; text-indent: 0.16em; opacity: 0.82; }
 .page-links[data-compact="true"] .page-status { display: none; }
 
-/* 玉の間隔が狭くなる件数では、読める大きさを保って整列する。 */
+/* Switch to a grid when the beads would become too crowded to read. */
 .page-links[data-layout="grid"] {
   display: flex;
   flex-wrap: wrap;
@@ -333,7 +333,7 @@ h1 {
   .subpage { min-height: calc(100svh - 59px); padding: 64px 24px; }
 }
 
-/* 対応ブラウザでは通常のページリンク・戻る操作にも適用される。 */
+/* Apply transitions to same-origin links and history navigation where supported. */
 @view-transition { navigation: auto; }
 ::view-transition-old(root) { animation: page-leave 200ms ease-in both; }
 ::view-transition-new(root) { animation: page-enter 320ms 40ms ease-out both; }
